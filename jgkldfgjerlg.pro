@@ -12,7 +12,8 @@ SOURCES += \
     emptycell.cpp \
     map.cpp \
     player.cpp \
-    world.cpp
+    world.cpp \
+    mybutton.cpp
 
 HEADERS += \
     cell.h \
@@ -22,4 +23,5 @@ HEADERS += \
     emptycell.h \
     map.h \
     player.h \
-    world.h
+    world.h \
+    mybutton.h

@@ -51,6 +51,9 @@ public slots:
     void left_click();
     void right_click();
 //    void click(QMouseEvent *event);
+    
+signals:
+    void clicked();
 };
 
 #endif // CELL_H

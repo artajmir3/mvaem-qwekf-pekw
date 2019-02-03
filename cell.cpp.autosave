@@ -54,11 +54,11 @@ void Cell::left_click(){
     if(this->is_clicked){
         return;
     }
+    this->is_clicked = true;
     if(this->is_mine){
-        cout<<"shit!"<<endl;
+        emit clicked();
         return;
     }
-    this->is_clicked = true;
     string str = "";
     str.append("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\");
     str.append(to_string(this->get_number()));
@@ -70,6 +70,7 @@ void Cell::left_click(){
             neighs[i]->left_click();
         }
     }
+    emit clicked();
 }
 
 void Cell::right_click(){
