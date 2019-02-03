@@ -7,22 +7,33 @@
 #include "nonblockcell.h"
 #include "emptycell.h"
 #include "blockcell.h"
-#include "map.h"
+#include "mymap.h"
+#include "world.h"
 
 int main(int argc, char* argv[]){
     QApplication app(argc, argv);
-    QWidget *window = new QWidget();
-    window->resize(500, 500);
 
-   QTextEdit *text = new QTextEdit(window);
+
+//    QWidget *window = new QWidget();
+//    window->resize(500, 500);
+
+//    QMovie* movie = new QMovie("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\gif\\win.gif");
+//    QLabel* label = new QLabel(window);
+//    label->setMovie(movie);
+//    movie->start();
+
+//   QTextEdit *text = new QTextEdit(window);
 //   QImage *image = new QImage("C:\\Users\\ASUS\\Desktop\\Untitled11.png");
 //   QLabel *label = new QLabel(window);
 //   label->setPixmap(QPixmap::fromImage(*image));
 //   label->setGeometry(0, 0, 100, 100);
 //   BlockCell *my_cell = new BlockCell(window, 0, 0);
 //   EmptyCell *my_cell1 = new EmptyCell(window, 1, 0);
-   Map *map = new Map(nullptr, window, 10, 10/*, nullptr*/);
+//   Map *map = new Map(nullptr, window, 10, 10/*, nullptr*/);
+//   MyMap *map = new MyMap(nullptr, window, 10, 10/*, nullptr*/);
 
-    window->show();
+//    window->show();
+//    Cell::initiate();
+    World *world = new World();
     return app.exec();
 }

@@ -1,18 +1,19 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "map.h"
-#include "player.h"
-#include "vector"
-using namespace std;
+#include <QtWidgets>
+#include "mymap.h"
 
-class World
+class World : public QObject
 {
+    Q_OBJECT
 private:
-    //Map map;
-    vector<Player*> player;
+    MyMap *map;
+    QWidget *window;
 public:
     World();
+public slots:
+    void resetMap();
 };
 
 #endif // WORLD_H

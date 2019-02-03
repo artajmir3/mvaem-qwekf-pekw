@@ -10,10 +10,10 @@ SOURCES += \
     blockcell.cpp \
     minecell.cpp \
     emptycell.cpp \
-    map.cpp \
     player.cpp \
-    world.cpp \
-    mybutton.cpp
+    mybutton.cpp \
+    mymap.cpp \
+    world.cpp
 
 HEADERS += \
     cell.h \
@@ -21,7 +21,7 @@ HEADERS += \
     blockcell.h \
     minecell.h \
     emptycell.h \
-    map.h \
     player.h \
-    world.h \
-    mybutton.h
+    mybutton.h \
+    mymap.h \
+    world.h

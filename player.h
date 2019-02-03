@@ -5,8 +5,8 @@
 class Player
 {
 private:
-    char username[20];
-    char password[20];
+//    char username[20];
+//    char password[20];
 public:
     Player(char* username, char* password);
     Player();
