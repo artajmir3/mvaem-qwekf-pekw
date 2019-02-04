@@ -35,7 +35,7 @@ World::World()
     }
 
     window->hide();
-    window->resize(this->width*Cell::width, this->height*Cell::height);
+    window->resize(this->width*Cell::width, this->height*Cell::height + 150);
     this->map = new MyMap(nullptr, window, this->width, this->height/*, nullptr*/);
     connect(this->map, SIGNAL(end()), this, SLOT(resetMap()));
     window->show();
@@ -47,7 +47,7 @@ void World::resetMap(){
     window->hide();
     delete window;
     window = new QWidget();
-    window->resize(this->width*Cell::width, this->height*Cell::height);
+    window->resize(this->width*Cell::width, this->height*Cell::height + 150);
     this->map = new MyMap(nullptr, window, this->width, this->height/*, nullptr*/);
     connect(this->map, SIGNAL(end()), this, SLOT(resetMap()));
     window->show();

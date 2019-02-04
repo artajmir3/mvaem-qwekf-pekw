@@ -7,29 +7,57 @@
 #include <unistd.h>
 #include <QMediaPlayer>
 #include <QVideoWidget>
+#include <scoreboard.h>
+#include "timerboard.h"
 using namespace std;
 
 MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, vector<vector<bool>> layout*/)
     :
     cells(width, vector<Cell*>(height, nullptr))
 {
+
     srand(time(0));
     this->active_player = active_player;
     this->window = window;
     this->width = width;
     this->height = height;
 
+
+    QWidget *mapWindow = new QWidget(window);
+    mapWindow->setGeometry(0, 150, this->width*Cell::width, this->height*Cell::height);
+
+    QLabel *header = new QLabel(window);
+    header->setGeometry(0, 0, this->width*Cell::width, 150);
+    QPixmap pic("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\simple.png");
+    QPixmap scaled=pic.scaled ( this->width*Cell::width, 150, Qt::IgnoreAspectRatio, Qt::FastTransformation );
+    header->setPixmap(scaled);
+
+    QLabel *smile = new QLabel(window);
+    smile->setGeometry(this->width*Cell::width / 2 - 50, 25, 100, 100);
+    QPixmap pic1("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\smile.jpg");
+    QPixmap scaled1=pic1.scaled ( 100, 100, Qt::IgnoreAspectRatio, Qt::FastTransformation );
+    smile->setPixmap(scaled1);
+
+    int totMine = 0;
+
     for (int i = 0; i < this->width; i++){
         for (int j = 0; j < this->height; j++){
-            int r = rand() %10;
-            if(r < 8){
-                cells[i][j] = new EmptyCell(window, i, j);
+            int r = rand() %8;
+            if(r < 6){
+                cells[i][j] = new EmptyCell(mapWindow, i, j);
             }else{
-                cells[i][j] = new MineCell(window, i, j);
+                cells[i][j] = new MineCell(mapWindow, i, j);
+                totMine++;
             }
             QObject::connect(cells[i][j], SIGNAL(clicked()), this, SLOT(checkWin()));
         }
     }
+
+    ScoreBoard *flags = new ScoreBoard(window, totMine);
+    flags->setGeometry(30, 30, 150, 90);
+
+    TimerBoard *timer = new TimerBoard(window);
+    timer->setGeometry(this->width*Cell::width - 150 - 30, 30, 150, 90);
 
     for (int i = 0; i < this->width; i++){
         for (int j = 0; j < this->height; j++){
@@ -50,6 +78,8 @@ MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, ve
                 down = this->cells[i][j + 1];
             }
             this->cells[i][j]->setNeighbours(up, down, right, left);
+            QObject::connect(this->cells[i][j], SIGNAL(addFlag()), flags, SLOT(sub()));
+            QObject::connect(this->cells[i][j], SIGNAL(delFlag()), flags, SLOT(add()));
         }
     }
 }

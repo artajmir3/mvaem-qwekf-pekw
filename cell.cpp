@@ -100,10 +100,12 @@ void Cell::right_click(){
         this->is_suspecious = true;
 //        this->change_picture("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\sus.png");
         this->change_picture(Cell::getSus());
+        emit delFlag();
     }else{
         this->is_flag = true;
 //        this->change_picture("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\flag.jpg");
         this->change_picture(Cell::getFlag());
+        emit addFlag();
     }
 }
 

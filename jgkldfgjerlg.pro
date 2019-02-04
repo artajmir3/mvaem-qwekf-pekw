@@ -15,7 +15,9 @@ SOURCES += \
     player.cpp \
     mybutton.cpp \
     mymap.cpp \
-    world.cpp
+    world.cpp \
+    scoreboard.cpp \
+    timerboard.cpp
 
 HEADERS += \
     cell.h \
@@ -26,4 +28,6 @@ HEADERS += \
     player.h \
     mybutton.h \
     mymap.h \
-    world.h
+    world.h \
+    scoreboard.h \
+    timerboard.h

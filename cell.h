@@ -66,6 +66,8 @@ public slots:
 
 signals:
     void clicked();
+    void addFlag();
+    void delFlag();
 };
 
 #endif // CELL_H
