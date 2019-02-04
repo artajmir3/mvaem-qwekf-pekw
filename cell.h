@@ -55,7 +55,10 @@ public:
     static QIcon getFlag();
     static QIcon getSus();
     static QIcon* getNums();
+    static QIcon getMine1();
+    static QIcon getMine();
     static void initiate();
+    void reveal();
 public slots:
     void left_click();
     void right_click();

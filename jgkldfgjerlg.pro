@@ -1,6 +1,8 @@
 QT = core gui
 
 QT += widgets
+QT += multimedia
+QT += multimediawidgets
 
 
 SOURCES += \

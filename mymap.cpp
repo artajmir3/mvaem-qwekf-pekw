@@ -5,6 +5,8 @@
 #include "minecell.h"
 #include <iostream>
 #include <unistd.h>
+#include <QMediaPlayer>
+#include <QVideoWidget>
 using namespace std;
 
 MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, vector<vector<bool>> layout*/)
@@ -61,27 +63,49 @@ void MyMap::checkWin(){
                 flag = false;
             }
             if(cell->getIsMine() && cell->getIsClicked()){
-                cout<<"Looooser"<<endl;
-                emit end();
+                this->loose();
+//                emit end();
                 return;
             }
         }
     }
     if (flag) {
-        cout<<"wiiiiiiin"<<endl;
-        QDialog *w = new QDialog();
-        QMovie* movie = new QMovie("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\gif\\win.gif");
-        QLabel* label = new QLabel(w);
-        label->setMovie(movie);
-        movie->start();
-        w->resize(350, 600);
-        w->show();
-        QObject::connect(w, SIGNAL(finished(int)), this, SLOT(runEnd()));
+        this->win();
 //        Sleep(10000);
 //        w->hide();
 //        delete w;
 //        emit end();
     }
+}
+
+void MyMap::win(){
+    QDialog *w = new QDialog();
+    QMovie* movie = new QMovie("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\gif\\win.gif");
+    QLabel* label = new QLabel(w);
+    label->setMovie(movie);
+    movie->start();
+    w->resize(350, 600);
+    w->show();
+    QObject::connect(w, SIGNAL(finished(int)), this, SLOT(runEnd()));
+
+}
+
+void MyMap::loose(){
+    for (int i = 0; i < this->width; i++){
+        for (int j = 0; j < this->height; j++){
+            this->cells[i][j]->reveal();
+        }
+    }
+    QDialog *w = new QDialog();
+    QVideoWidget *ww = new QVideoWidget(w);
+    QMediaPlayer *player = new QMediaPlayer(ww);
+    player->setMedia(QUrl::fromLocalFile("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\video\\Loser.mp4"));
+    player->play();
+    w->resize(1000, 500);
+    ww->setGeometry(0, 0, 1000, 500);
+    w->show();
+    player->setVideoOutput(ww);
+    QObject::connect(w, SIGNAL(finished(int)), this, SLOT(runEnd()));
 }
 
 void MyMap::runEnd(){

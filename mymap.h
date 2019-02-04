@@ -22,6 +22,8 @@ public:
     int getHeight();
     vector<vector<Cell*>> getCells();
     Cell* getCell(int x, int y);
+    void loose();
+    void win();
     void clear();
 signals:
     void end();

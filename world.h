@@ -10,6 +10,8 @@ class World : public QObject
 private:
     MyMap *map;
     QWidget *window;
+    int width;
+    int height;
 public:
     World();
 public slots:

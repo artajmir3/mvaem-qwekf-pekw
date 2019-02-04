@@ -1,6 +1,7 @@
 #include "cell.h"
 
 #include <iostream>
+#include <QSound>
 using namespace std;
 
 Cell::Cell()
@@ -54,11 +55,20 @@ void Cell::left_click(){
     if(this->is_clicked){
         return;
     }
+    if(this->is_flag){
+        return;
+    }
+    if(this->is_suspecious){
+        return;
+    }
     this->is_clicked = true;
     if(this->is_mine){
+        QSound::play("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\sounds\\Explosion.wav");
+        this->change_picture(Cell::getMine1());
         emit clicked();
         return;
     }
+    QSound::play("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\sounds\\click.wav");
     string str = "";
     str.append("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\");
     str.append(to_string(this->get_number()));
@@ -238,4 +248,20 @@ QIcon* Cell::getNums(){
                            QIcon("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\7.png"),
                            QIcon("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\8.png")};
     return nums;
+}
+
+QIcon Cell::getMine1(){
+    static QIcon mine1 = QIcon("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\mine1.jpg");
+    return mine1;
+}
+
+QIcon Cell::getMine(){
+    static QIcon mine = QIcon("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\mine.jpg");
+    return mine;
+}
+
+void Cell::reveal(){
+    if(this->is_mine && !this->is_clicked){
+        this->change_picture(Cell::getMine());
+    }
 }
