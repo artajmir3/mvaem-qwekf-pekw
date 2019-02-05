@@ -15,7 +15,8 @@ MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, ve
     :
     cells(width, vector<Cell*>(height, nullptr))
 {
-
+    window->setWindowTitle("MaryamSweeper");
+    window->setWindowIcon(QIcon("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\icon.png"));
     srand(time(0));
     this->active_player = active_player;
     this->window = window;
@@ -43,7 +44,7 @@ MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, ve
     for (int i = 0; i < this->width; i++){
         for (int j = 0; j < this->height; j++){
             int r = rand() %8;
-            if(r < 6){
+            if(r < 7){
                 cells[i][j] = new EmptyCell(mapWindow, i, j);
             }else{
                 cells[i][j] = new MineCell(mapWindow, i, j);
