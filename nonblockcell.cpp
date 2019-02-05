@@ -2,10 +2,10 @@
 #include <iostream>
 using namespace std;
 
-NonBlockCell::NonBlockCell()
-{
+//NonBlockCell::NonBlockCell()
+//{
 
-}
+//}
 
 NonBlockCell::NonBlockCell(QWidget *window, int x, int y)
 //    : Cell(window, x, y, "C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\empty.jpg"){

@@ -4,24 +4,25 @@
 #include <QSound>
 using namespace std;
 
-Cell::Cell()
-{
+//Cell::Cell()
+//{
 
-}
+//}
 
-Cell::~Cell(){
+//Cell::~Cell(){
 
-}
+//}
 
 int Cell::width = 50;
 int Cell::height = 50;
 
-Cell::Cell(QWidget *window, int x, int y, QIcon icon){
+Cell::Cell(QWidget *parent, int x, int y, QIcon icon)
+    :MyButton (parent){
     this->is_clicked = false;
     this->is_flag = false;
     this->is_suspecious = false;
 
-    this->window = window;
+//    this->window = window;
     this->x = x;
     this->y = y;
 //    this->image = new QImage(filename);
@@ -29,15 +30,18 @@ Cell::Cell(QWidget *window, int x, int y, QIcon icon){
 //    this->label->setPixmap(QPixmap::fromImage(*image));
 
 
-    this->label = new MyButton(window);
-    this->label->setIcon(icon);
-    this->label->setIconSize(QSize(Cell::width, Cell::height));
-    this->label->setFlat(true);
+//    this->label = new MyButton(window);
+//    this->label->setIcon(icon);
+//    this->label->setIconSize(QSize(Cell::width, Cell::height));
+//    this->label->setFlat(true);
+    this->setIcon(icon);
+    this->setIconSize(QSize(Cell::width, Cell::height));
+    this->setFlat(true);
 
-    this->label->setGeometry(this->x * Cell::width, this->y * Cell::height, Cell::width, Cell::height);
+    this->setGeometry(this->x * Cell::width, this->y * Cell::height, Cell::width, Cell::height);
 
-    QObject::connect(this->label, SIGNAL(clicked()), this, SLOT(left_click()));
-    QObject::connect(this->label, SIGNAL(rightClicked()), this, SLOT(right_click()));
+    QObject::connect(this, SIGNAL(clicked()), this, SLOT(left_click()));
+    QObject::connect(this, SIGNAL(rightClicked()), this, SLOT(right_click()));
 }
 
 void Cell::change_picture(QIcon icon){
@@ -45,7 +49,7 @@ void Cell::change_picture(QIcon icon){
 //    this->label->setPixmap(QPixmap::fromImage(*image));
 
 
-    this->label->setIcon(icon);
+    this->setIcon(icon);
 }
 
 void Cell::left_click(){
@@ -65,7 +69,7 @@ void Cell::left_click(){
     if(this->is_mine){
         QSound::play("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\sounds\\Explosion.wav");
         this->change_picture(Cell::getMine1());
-        emit clicked();
+        emit check();
         return;
     }
     QSound::play("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\sounds\\click.wav");
@@ -81,7 +85,7 @@ void Cell::left_click(){
             neighs[i]->left_click();
         }
     }
-    emit clicked();
+    emit check();
 }
 
 void Cell::right_click(){
@@ -213,7 +217,7 @@ bool Cell::getIsClicked(){
 }
 
 void Cell::clear(){
-    this->label->deleteLater();
+    this->deleteLater();
 }
 
 void Cell::initiate(){

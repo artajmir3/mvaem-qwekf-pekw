@@ -24,6 +24,7 @@ MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, ve
     this->height = height;
 
 
+
     QWidget *mapWindow = new QWidget(window);
     mapWindow->setGeometry(0, 150, this->width*Cell::width, this->height*Cell::height);
 
@@ -50,7 +51,7 @@ MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, ve
                 cells[i][j] = new MineCell(mapWindow, i, j);
                 totMine++;
             }
-            QObject::connect(cells[i][j], SIGNAL(clicked()), this, SLOT(checkWin()));
+            QObject::connect(cells[i][j], SIGNAL(check()), this, SLOT(checkWin()));
         }
     }
 
@@ -110,6 +111,7 @@ void MyMap::checkWin(){
 }
 
 void MyMap::win(){
+    this->active_player->win();
     QDialog *w = new QDialog();
     QMovie* movie = new QMovie("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\gif\\win.gif");
     QLabel* label = new QLabel(w);
@@ -122,6 +124,7 @@ void MyMap::win(){
 }
 
 void MyMap::loose(){
+    this->active_player->loose();
     for (int i = 0; i < this->width; i++){
         for (int j = 0; j < this->height; j++){
             this->cells[i][j]->reveal();

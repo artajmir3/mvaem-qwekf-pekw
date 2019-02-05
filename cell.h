@@ -7,30 +7,30 @@
 #include <vector>
 using namespace std;
 
-class Cell : public QObject
+class Cell : public MyButton
 {
     Q_OBJECT
 protected:
     int x;
     int y;
-    QWidget *window;
-    QImage *image;
-    MyButton *label;
+//    QWidget *window;
+//    QImage *image;
+//    MyButton *label;
 //    QLabel * label;
     void change_picture(QIcon icon);
     bool is_clicked;
     bool is_suspecious;
     bool is_flag;
-    bool is_block;
     bool is_mine;
+    bool is_block;
     Cell *left;
     Cell *right;
     Cell *up;
     Cell *down;
 public:
-    Cell();
-    Cell(QWidget *window, int x, int y, QIcon icon);
-    virtual ~Cell();
+//    Cell();
+    Cell(QWidget *parent, int x, int y, QIcon icon);
+//    virtual ~Cell();
     int getX();
     int getY();
     static int width;
@@ -65,7 +65,7 @@ public slots:
 //    void click(QMouseEvent *event);
 
 signals:
-    void clicked();
+    void check();
     void addFlag();
     void delFlag();
 };
