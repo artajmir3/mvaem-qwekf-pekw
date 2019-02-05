@@ -10,6 +10,7 @@ int ScoreBoard::digitHeight = 90;
 
 ScoreBoard::ScoreBoard(QWidget *parent, int number) : QWidget (parent){
     this->number = number;
+    this->is_finished = false;
     this->labels[0] = new QPushButton(this);
     this->labels[1] = new QPushButton(this);
     this->labels[2] = new QPushButton(this);
@@ -26,11 +27,17 @@ ScoreBoard::ScoreBoard(QWidget *parent, int number) : QWidget (parent){
 }
 
 void ScoreBoard::add(){
+    if(is_finished){
+        return;
+    }
     this->number++;
     this->update();
 }
 
 void ScoreBoard::sub(){
+    if(is_finished){
+        return;
+    }
     this->number--;
     this->update();
 }
@@ -62,4 +69,8 @@ void ScoreBoard::update(){
     if(this->number < 0){
         this->labels[0]->setIcon(ScoreBoard::getIcons()[10]);
     }
+}
+
+void ScoreBoard::stop(){
+    this->is_finished = true;
 }

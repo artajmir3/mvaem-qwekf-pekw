@@ -15,6 +15,7 @@ MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, ve
     :
     cells(width, vector<Cell*>(height, nullptr))
 {
+    this->is_finished = false;
     window->setWindowTitle("MaryamSweeper");
     window->setWindowIcon(QIcon("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\images\\icon.png"));
     srand(time(0));
@@ -40,19 +41,10 @@ MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, ve
     QPixmap scaled1=pic1.scaled ( 100, 100, Qt::IgnoreAspectRatio, Qt::FastTransformation );
     smile->setPixmap(scaled1);
 
-    int totMine = 0;
 
-    for (int i = 0; i < this->width; i++){
-        for (int j = 0; j < this->height; j++){
-            int r = rand() %8;
-            if(r < 7){
-                cells[i][j] = new EmptyCell(mapWindow, i, j);
-            }else{
-                cells[i][j] = new MineCell(mapWindow, i, j);
-                totMine++;
-            }
-            QObject::connect(cells[i][j], SIGNAL(check()), this, SLOT(checkWin()));
-        }
+    int totMine = 0;
+    while(totMine == 0){
+        totMine = this->constructCells(mapWindow);
     }
 
     ScoreBoard *flags = new ScoreBoard(window, totMine);
@@ -60,6 +52,8 @@ MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, ve
 
     TimerBoard *timer = new TimerBoard(window);
     timer->setGeometry(this->width*Cell::width - 150 - 30, 30, 150, 90);
+
+    QObject::connect(this, SIGNAL(timerStop()), timer, SLOT(stop()));
 
     for (int i = 0; i < this->width; i++){
         for (int j = 0; j < this->height; j++){
@@ -86,7 +80,28 @@ MyMap::MyMap(Player *active_player, QWidget *window, int width, int height/*, ve
     }
 }
 
+int MyMap::constructCells(QWidget* mapWindow){
+    int totMine = 0;
+
+    for (int i = 0; i < this->width; i++){
+        for (int j = 0; j < this->height; j++){
+            int r = rand() %8;
+            if(r < 7){
+                cells[i][j] = new EmptyCell(mapWindow, i, j);
+            }else{
+                cells[i][j] = new MineCell(mapWindow, i, j);
+                totMine++;
+            }
+            QObject::connect(cells[i][j], SIGNAL(check()), this, SLOT(checkWin()));
+        }
+    }
+    return totMine;
+}
+
 void MyMap::checkWin(){
+    if(this->is_finished){
+        return;
+    }
     bool flag = true;
     for (int i = 0; i < this->width; i++){
         for (int j = 0; j < this->height; j++){
@@ -111,7 +126,9 @@ void MyMap::checkWin(){
 }
 
 void MyMap::win(){
+    this->is_finished = true;
     this->active_player->win();
+    emit timerStop();
     QDialog *w = new QDialog();
     QMovie* movie = new QMovie("C:\\Users\\ASUS\\Documents\\jgkldfgjerlg\\media\\gif\\win.gif");
     QLabel* label = new QLabel(w);
@@ -124,7 +141,9 @@ void MyMap::win(){
 }
 
 void MyMap::loose(){
+    this->is_finished = true;
     this->active_player->loose();
+    emit timerStop();
     for (int i = 0; i < this->width; i++){
         for (int j = 0; j < this->height; j++){
             this->cells[i][j]->reveal();

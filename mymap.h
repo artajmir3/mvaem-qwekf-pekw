@@ -16,6 +16,7 @@ private:
     vector<vector<Cell*>> cells;
     QWidget *window;
     Player *active_player;
+    bool is_finished;
 public:
     MyMap(Player *active_player, QWidget *window, int width, int height/*, vector<vector<bool>> layout*/);
     int getWidth();
@@ -25,8 +26,10 @@ public:
     void loose();
     void win();
     void clear();
+    int constructCells(QWidget* mapWindow);
 signals:
     void end();
+    void timerStop();
 public slots:
     void checkWin();
     void runEnd();
